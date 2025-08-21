@@ -2,3 +2,6 @@ discord.py
 openai
 python-dotenv
 requests
+fastapi
+uvicorn
+pydantic
