@@ -11,16 +11,19 @@ RUN apt-get update && apt-get install -y gcc && rm -rf /var/lib/apt/lists/*
 # Set working directory
 WORKDIR /app
 
-# Copy all files
-COPY . .
+# Copy source code
+COPY src/ ./src/
 
-# Install requirements
+# Copy configuration
+COPY config/ ./config/
+
+# Install requirements from centralized location
 RUN pip install --upgrade pip
-RUN pip install discord.py openai python-dotenv requests
+RUN pip install -r config/requirements.txt
 
 # Verify installation
 RUN python -c "import discord; print('Discord.py installed:', discord.__version__)"
 RUN python -c "import openai; print('OpenAI installed')"
 
-# Run bot as root (temporary for debugging)
-CMD ["python", "bot.py"]
+# Run bot from src directory
+CMD ["python", "src/bot.py"]
